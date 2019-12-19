@@ -1,4 +1,3 @@
-
 package main
 
 import (
@@ -205,11 +204,11 @@ func main() {
 
 	vert := strings.Split(ptr.nodes[os.Args[3]].mark.way, "|")
 
-	fmt.Printf("graph %s {\n", ptr.name)
+	var out string
+	out = "graph " + ptr.name  +  " {\n"
 	for i := 1; i < len(vert) - 1; i++ {
 		dist := strconv.FormatFloat(ptr.GetDistanceBtw(vert[i-1], vert[i]), 'f', -1, 64)
-		out := "\t" + vert[i-1] + " -- " + vert[i] + " [label=" + dist + "]" +" [color=red];"
-		fmt.Println(out)
+		out += "\t" + vert[i-1] + " -- " + vert[i] + " [label=" + dist + "]" +" [color=red];\n"
 	}
 	outputed := make(map[Pair2]int, 0)
 	for i := 1; i < len(vert); i++ {
@@ -224,12 +223,15 @@ func main() {
 			if ok1 {continue}
 			if ok2 {continue}
 			formated_dist := strconv.FormatFloat(dist, 'f', -1, 64)
-			out := "\t" + node.name  + " -- " + v + " [label=" + formated_dist + "];"
-			fmt.Println(out)
+			out += "\t" + node.name  + " -- " + v + " [label=" + formated_dist + "];\n"
 
 			outputed[Pair2{v, node.name}] = 1
 			outputed[Pair2{node.name, v}] = 1
 		}
 	}
-	fmt.Println("}")
-}
+	out += "}\n"
+
+	file, err := os.Create("./result.dot")
+	file.WriteString(out)
+	file.Close()
+	file.Close()}

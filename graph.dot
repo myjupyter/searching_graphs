@@ -8,7 +8,7 @@ graph G {
 	f -- e [label=9];
 	a -- f [label=14];
 	c -- f [label=2];
-	h -- a [label=1];
+	h -- a [label=8];
 	f -- h [label=14];
 	h -- c [label=4];
 }
